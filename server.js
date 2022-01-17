@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const cors = require('cors');
 const connectDB = require('./db/connect');
+const path = require('path');
 
 
 
@@ -22,23 +22,17 @@ app.use(express.urlencoded({limit: '50mb', extended: true}))
 app.use(cookieParser());
 
 
-// cors
-
-  app.use(cors({
-    origin: "*"
-  }));
-
 
 // routes
 app.use('/api/auth', authRouter);
 app.use('/api/recipes', recipesRouter);
 
-app.use(express.static(path.join(__dirname, "/client/build")));
+const buildPath = path.normalize(path.join(__dirname, '../client/build'));
+app.use(express.static(buildPath));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+app.get('(/*)?', async (req, res, next) => {
+  res.sendFile(path.join(buildPath, 'index.html'));
 });
-
 
 // connect to db and start server
 const port = process.env.PORT || 8000;
