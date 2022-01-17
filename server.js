@@ -30,7 +30,7 @@ app.use('/api/recipes', recipesRouter);
 const buildPath = path.normalize(path.join(__dirname, '../client/build'));
 app.use(express.static(buildPath));
 
-app.get('(/*)?', async (req, res, next) => {
+app.get('*', async (req, res, next) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
 
