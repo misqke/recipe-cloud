@@ -20,18 +20,15 @@ app.use(morgan('dev'));
 app.use(express.json({limit: '50mb', extended: true}));    
 app.use(express.urlencoded({limit: '50mb', extended: true}))
 app.use(cookieParser());
-
-
+app.use(express.static(path.join(__dirname, '..client/build')));
 
 // routes
 app.use('/api/auth', authRouter);
 app.use('/api/recipes', recipesRouter);
 
-const buildPath = path.normalize(path.join(__dirname, '../client/build'));
-app.use(express.static(buildPath));
 
-app.get('(/*)?', async (req, res, next) => {
-  res.sendFile(path.join(buildPath, 'index.html'));
+app.get('*', async (req, res, next) => {
+  res.sendFile(path.join(__dirname, '..client/build', 'index.html'));
 });
 
 // connect to db and start server
