@@ -1,0 +1,40 @@
+.cardContainer {
+  display: flex;
+  width: 90%;
+  padding-top: 8rem;
+  background-size: cover;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-position: center;
+  background-color: #fff;
+}
+
+.body {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(180deg, #0000, #0006 15%, #000);
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.author {
+  color: #ccc;
+  align-self: flex-end;
+}
+
+@media screen and (min-width: 576px) {
+  .cardContainer {
+    width: 250px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .cardContainer {
+    width: 300px;
+  }
+}

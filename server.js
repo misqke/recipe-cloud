@@ -33,6 +33,12 @@ app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use('/api/recipes', recipesRouter);
 
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+});
+
 
 // connect to db and start server
 const port = process.env.PORT || 8000;
