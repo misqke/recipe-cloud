@@ -38,7 +38,7 @@ const addRecipe = async (req, res) => {
       const uploadResponse = await cloudinary.uploader.upload(image.url, {
         upload_preset: "recipe_uploads"
       })
-      newRecipe.image.url = uploadResponse.url;
+      newRecipe.image.url = uploadResponse.secure_url;
       newRecipe.image.id = uploadResponse.public_id;
     }
     const recipe = await Recipe.create(newRecipe);
