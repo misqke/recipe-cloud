@@ -47,7 +47,8 @@ const RecipeForm = ({username, recipe, update}) => {
     const recipeFunction = update ? updateRecipe : addRecipe;
     const newRecipe = await recipeFunction(recipeToSubmit);
     if (newRecipe.error) {
-      setValues({...values, error: newRecipe.error, loading: false, showForm: true})
+      console.log(newRecipe.error);
+      setValues({...values, error: newRecipe.error.error || newRecipe.error, loading: false, showForm: true})
     } else {
       setValues({...values, loading: false, message: newRecipe.msg})
       navigate(`/recipes/${newRecipe.recipe._id}`)
@@ -145,8 +146,8 @@ const RecipeForm = ({username, recipe, update}) => {
             <div className="col-md-12">
               
               <div className='row justify-content-center'>
-                <div className="col-sm-7 my-2 justify-content-center align-items-center">
-                  <img  src={!preview ? image.url : preview} alt={name} style={{width: "400px", height: "auto"}} />
+                <div className="col-sm-7 my-2 d-flex justify-content-center align-items-center">
+                  <img  src={!preview ? image.url : preview} alt={name} className='img-fluid border border-primary border-5' style={{borderRadius: "12px"}} />
                 </div>
               </div>
               <label htmlFor="image" className="form-label font-monospace">Image</label>

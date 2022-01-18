@@ -1,6 +1,6 @@
 .cardContainer {
   display: flex;
-  width: 90%;
+  width: 100%;
   padding-top: 8rem;
   background-size: cover;
   flex-direction: column;
@@ -9,6 +9,7 @@
   border-top-right-radius: 10px;
   background-position: center;
   background-color: #fff;
+  border: 5px solid #1266f1;
 }
 
 .body {
@@ -29,12 +30,18 @@
 
 @media screen and (min-width: 576px) {
   .cardContainer {
-    width: 250px;
+    width: 45%;
   }
 }
 
 @media screen and (min-width: 992px) {
   .cardContainer {
-    width: 300px;
+    width: 28%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .cardContainer {
+    width: 24%;
   }
 }

@@ -34,7 +34,7 @@ const addRecipe = async (req, res) => {
     const {name, time, ingredients, directions, image} = req.body;
     const creator = req.user.username;
     const newRecipe = {name, time, ingredients, directions, image, createdBy: creator};
-    if (image.url !== "/img/no-img-icon.png") {
+    if (image.url !== "/no-img-icon.png") {
       const uploadResponse = await cloudinary.uploader.upload(image.url, {
         upload_preset: "recipe_uploads"
       })

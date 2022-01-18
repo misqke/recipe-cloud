@@ -49,11 +49,11 @@ const RecipeId = () => {
   return (
     <div className='container py-3'>
       <h1 className='text-center fs-1 mt-3 text-primary' style={{fontFamily: "Permanent Marker, cursive"}}>{recipe.name}</h1>
-      <div className="row justify-content-center justify-content-md-between justify-content-xl-around my-5">
-        <div className="col-8 col-md-4 order-2 order-md-1 mt-4 mt-md-0">
+      <div className="row my-3 justify-content-center justify-content-md-between justify-content-xl-around">
+        <div className="col-10 col-md-4 order-2 order-md-1 my-4 pt-3 my-md-0">
           <h2 className='text-center font-monospace text-muted'>Ingredients</h2>
           <hr/>
-          <ul style={{listStyleType: "none"}}>
+          <ul style={{listStyleType: "none"}} className='ps-0 ps-sm-4 ps-md-0 ps-lg-5'>
             {recipe.ingredients.map( (ingredient,i) => (
             <li className='my-3 fs-5 d-flex align-items-center' key={i} style={{fontFamily: "'Shadows Into Light', cursive", letterSpacing: "2px"}}>
               <div className='bg-primary rounded-circle me-3' style={{height: "10px", width: "10px"}}></div>
@@ -63,8 +63,8 @@ const RecipeId = () => {
           </ul>
         </div>
         <div className="col-md-7 col-xl-6 mt-md-4 order-1 order-md-2">
-          <div className="container-fluid d-flex flex-column justify-content-center">
-            <img className='img-fluid' src={recipe.image.url} alt={recipe.name} />
+          <div className="container-fluid d-flex flex-column justify-content-center px-0 px-md-3">
+            <img className='img-fluid border border-primary border-5' style={{borderRadius: "12px"}} src={recipe.image.url} alt={recipe.name} />
             { username === recipe.createdBy ? (
             <Link to={`/recipes/${recipe._id}/edit`}>
               <button className='btn btn-primary mt-3'>Edit Recipe</button>
@@ -74,21 +74,21 @@ const RecipeId = () => {
           </div>
         </div>
       </div>    
-      <div className="row my-5 py-3 justify-content-center">
+      <div className="row my-3 py-3 justify-content-center">
         <div className="col-md-10 col-lg-8">
           <h2 className='text-center font-monospace text-muted'>Directions</h2>
           <hr/>
-          <ol style={{listStyleType: "none"}}>
+          <ul style={{listStyleType: "none"}} className='ps-1'>
             {recipe.directions.map( (direction, i) => (
             <li className=' fs-5 my-3 px-2 d-flex' key={i} style={{fontFamily: "'Shadows Into Light', cursive", letterSpacing: "2px"}}>
               <div className='text-primary p fw-bolder me-3'>{i+1}.</div>
               {direction}
             </li>
               ))}
-          </ol>
+          </ul>
         </div>
       </div>
-      <div className="container mb-5">
+      <div className="container mb-5 mt-3 pt-3">
         <h2 className='text-muted font-monospace'>Comments</h2>
         <hr />
         {commentsList.map( (comment, i) => (
