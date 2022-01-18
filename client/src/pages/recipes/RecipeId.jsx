@@ -64,9 +64,7 @@ const RecipeId = () => {
         </div>
         <div className="col-md-7 col-xl-6 mt-md-4 order-1 order-md-2">
           <div className="container-fluid d-flex flex-column justify-content-center px-0 px-md-3">
-            <div className="container-fluid bg-primary p-3" style={{borderRadius: "12px"}}>
-              <img className='img-fluid' style={{borderRadius: "12px"}} src={recipe.image.url} alt={recipe.name} />
-            </div>
+              <img className='img-fluid' style={{border: "10px solid #1266F1",borderRadius: "20px"}} src={recipe.image.url} alt={recipe.name} />
             { username === recipe.createdBy ? (
             <Link to={`/recipes/${recipe._id}/edit`}>
               <button className='btn btn-primary mt-3'>Edit Recipe</button>
