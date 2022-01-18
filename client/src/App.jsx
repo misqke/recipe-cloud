@@ -1,6 +1,6 @@
 import React from 'react'
 import Home from './pages/Home'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Header from './components/Header';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -13,7 +13,7 @@ import AddRecipe from './pages/recipes/AddRecipe';
 const App = () => {
   return (
     <div>
-      <BrowserRouter>
+      <HashRouter>
         <Header />
         <Routes>
           <Route path="/" element={<Home />}/>
@@ -25,7 +25,7 @@ const App = () => {
             <Route path="/recipes/:id/edit" element={<EditRecipe />} />
           
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   )
 }

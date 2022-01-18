@@ -145,8 +145,8 @@ const RecipeForm = ({username, recipe, update}) => {
             <div className="col-md-12">
               
               <div className='row justify-content-center'>
-                <div className="col-sm-7 my-2">
-                  <img  src={preview ? preview : image.url} alt={name} style={{width: "400px", height: "auto"}} />
+                <div className="col-sm-7 my-2 justify-content-center align-items-center">
+                  <img  src={!preview ? image.url : preview} alt={name} style={{width: "400px", height: "auto"}} />
                 </div>
               </div>
               <label htmlFor="image" className="form-label font-monospace">Image</label>

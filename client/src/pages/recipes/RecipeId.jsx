@@ -37,7 +37,13 @@ const RecipeId = () => {
     getServerRecipe(id);
   }, [id]);
 
-
+  if (!recipe) {
+    return (
+      <div className="container">
+        <h2 className="text-secondadry">Loading recipe...</h2>
+      </div>
+    )
+  }
 
   if (recipe) {
   return (
