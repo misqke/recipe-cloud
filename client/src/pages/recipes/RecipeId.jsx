@@ -48,7 +48,7 @@ const RecipeId = () => {
   if (recipe) {
   return (
     <div className='container py-3'>
-      <h1 className='text-center fs-1 mt-3 text-primary' style={{fontFamily: "Permanent Marker, cursive"}}>{recipe.name}</h1>
+      <h1 className='text-center fs-1 text-primary' style={{fontFamily: "Permanent Marker, cursive"}}>{recipe.name}</h1>
       <div className="row my-3 justify-content-center justify-content-md-between justify-content-xl-around">
         <div className="col-10 col-md-4 order-2 order-md-1 my-4 pt-3 my-md-0">
           <h2 className='text-center font-monospace text-muted'>Ingredients</h2>
@@ -64,7 +64,9 @@ const RecipeId = () => {
         </div>
         <div className="col-md-7 col-xl-6 mt-md-4 order-1 order-md-2">
           <div className="container-fluid d-flex flex-column justify-content-center px-0 px-md-3">
-            <img className='img-fluid border border-primary border-5' style={{borderRadius: "12px"}} src={recipe.image.url} alt={recipe.name} />
+            <div className="container-fluid bg-primary p-3" style={{borderRadius: "12px"}}>
+              <img className='img-fluid' style={{borderRadius: "12px"}} src={recipe.image.url} alt={recipe.name} />
+            </div>
             { username === recipe.createdBy ? (
             <Link to={`/recipes/${recipe._id}/edit`}>
               <button className='btn btn-primary mt-3'>Edit Recipe</button>

@@ -47,8 +47,7 @@ const RecipeForm = ({username, recipe, update}) => {
     const recipeFunction = update ? updateRecipe : addRecipe;
     const newRecipe = await recipeFunction(recipeToSubmit);
     if (newRecipe.error) {
-      console.log(newRecipe.error);
-      setValues({...values, error: newRecipe.error.error || newRecipe.error, loading: false, showForm: true})
+      setValues({...values, error: newRecipe.error.error || newRecipe.error.message || newRecipe.error, loading: false, showForm: true})
     } else {
       setValues({...values, loading: false, message: newRecipe.msg})
       navigate(`/recipes/${newRecipe.recipe._id}`)
@@ -74,6 +73,7 @@ const RecipeForm = ({username, recipe, update}) => {
   }
 
   const handleFileChange = (e) => {
+    setValues({...values, error: false, file: null})
     const newFile = e.target.files[0];
     setValues({...values, error: false, file: newFile})
     previewFile(newFile);
