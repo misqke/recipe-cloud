@@ -38,13 +38,7 @@ const RecipeId = () => {
   }, [id]);
 
 
-  if (recipe === false) {
-    return (
-      <div style={{height: "80vh"}} className="container w-100 d-flex justify-content-center align-items-center">
-        <h2 style={{fontFamily: "Permanent Marker, cursive"}}>THIS RECIPE DOES NOT EXIST</h2>
-      </div>
-    )
-  }
+
   if (recipe) {
   return (
     <div className='container py-3'>

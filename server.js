@@ -27,7 +27,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/recipes', recipesRouter);
 
 
-app.get('*', async (req, res, next) => {
+app.get('/*', async (req, res, next) => {
   res.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
 
