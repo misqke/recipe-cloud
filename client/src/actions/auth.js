@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const signup = async (user) => {
   try {
-    const response = await axios.post(`https://misqke-recipe-cloud.herokuapp.com/api/auth/signup`, user);
+    const response = await axios.post(`${process.env.REACT_APP_API}/api/auth/signup`, user);
     return response.data;
   } catch (error) {
     console.log(error.response.data);
@@ -14,7 +14,7 @@ export const signup = async (user) => {
 
 export const login = async (user) => {
   try {
-    const response = await axios.post(`https://misqke-recipe-cloud.herokuapp.com/api/auth/login`, user);
+    const response = await axios.post(`${process.env.REACT_APP_API}/api/auth/login`, user);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -27,7 +27,7 @@ export const logout = async (next) => {
   clearLocalStorage('user');
   next();
   try {
-    const response = await axios.get(`https://misqke-recipe-cloud.herokuapp.com/api/auth/logout`);
+    const response = await axios.get(`${process.env.REACT_APP_API}/api/auth/logout`);
     return response.data;
   } catch (error) {
     console.log(error);
