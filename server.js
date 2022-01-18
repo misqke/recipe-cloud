@@ -10,6 +10,7 @@ const cors = require('cors');
 // import routes
 const authRouter = require('./routes/auth');
 const recipesRouter = require('./routes/recipes');
+const userRouter = require('./routes/user');
 
 
 // app
@@ -29,11 +30,12 @@ app.use(cors(corsOptions));
 // routes
 app.use('/api/auth', authRouter);
 app.use('/api/recipes', recipesRouter);
+app.use('/api/user', userRouter);
 
 
-/* app.get('/*', async (req, res, next) => {
+app.get('/*', async (req, res, next) => {
   res.sendFile(path.join(__dirname, 'client/build/index.html'));
-}); */
+}); 
 
 // connect to db and start server
 const port = process.env.PORT || 8000;

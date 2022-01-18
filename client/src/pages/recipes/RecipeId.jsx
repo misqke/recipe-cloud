@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
-import { getSingleRecipe, addComment, deleteComment } from '../../actions/recipes';
+import { getSingleRecipe, addComment, deleteComment, toggleLike } from '../../actions/recipes';
+import { getUser } from '../../actions/user';
 import {Link, useParams} from 'react-router-dom'
 import Comment from '../../components/Comment';
 import {useState, useEffect} from 'react';
@@ -12,18 +13,27 @@ const RecipeId = () => {
   const [comment, setComment] = useState("");
   const [showComment, setShowComment] = useState(false);
   const [commentsList, setCommentsList] = useState(recipe.comments || []);
+  const [likes, setLikes] = useState([]);
 
-  const username = useSelector((state) => state.user.username);
+  const user = useSelector((state) => state.user);
+
+  const handleLike = async () => {
+    const response = await toggleLike(id);
+    console.log('recipeId - handleLike - response:', response.user.liked_recipes);
+    if (response.user.liked_recipes) {
+      setLikes(response.user.liked_recipes);
+    }
+  }
 
   const handlePostComment = async () => {
-    const response = await addComment(comment, recipe._id);
+    const response = await addComment(comment, id);
     setShowComment(false);
     setCommentsList(response.recipe.comments)
     setComment("");
   }
 
   const handleDeleteComment = async (index) => {
-    const response = await deleteComment(index, recipe._id);
+    const response = await deleteComment(index, id);
     setCommentsList(response.recipe.comments);
   }
 
@@ -31,16 +41,36 @@ const RecipeId = () => {
     async function getServerRecipe (id) {
       if (id !== undefined) {
         const data = await getSingleRecipe(id);
-        setRecipe(data.recipe || false);
+        setRecipe(data.recipe || "none");
       }
     }
     getServerRecipe(id);
   }, [id]);
 
+  useEffect ( () => {
+    async function getServerUser (id) {
+      if (id !== "") {
+        const data = await getUser(id);
+        if (data.user.liked_recipes) {
+          setLikes(data.user.liked_recipes);
+        }
+      }
+    };
+    getServerUser(user._id);
+  }, [user]);
+
   if (!recipe) {
     return (
       <div className="container">
         <h2 className="text-secondadry">Loading recipe...</h2>
+      </div>
+    )
+  }
+
+  if (recipe === "none") {
+    return (
+      <div className="container">
+        <h2 className="text-secondadry">Recipe not found...</h2>
       </div>
     )
   }
@@ -65,12 +95,17 @@ const RecipeId = () => {
         <div className="col-md-7 col-xl-6 mt-md-4 order-1 order-md-2">
           <div className="container-fluid d-flex flex-column justify-content-center px-0 px-md-3">
               <img className='img-fluid' style={{border: "10px solid #1266F1",borderRadius: "20px"}} src={recipe.image.url} alt={recipe.name} />
-            { username === recipe.createdBy ? (
-            <Link to={`/recipes/${recipe._id}/edit`}>
-              <button className='btn btn-primary mt-3'>Edit Recipe</button>
-            </Link>
-            ) : (
-            <p className='h6 my-2 mx-4'>More recipes by <Link to={`/users/${recipe.createdBy}`}>{recipe.createdBy}</Link></p>)}
+              <div className="container-fluid d-flex justify-content-between px-5 px-md-3 my-2">
+                { user.username === recipe.createdBy ? (
+                <Link to={`/recipes/${recipe._id}/edit`}>
+                  <button className='btn btn-primary mt-3'>Edit Recipe</button>
+                </Link>
+                ) : (
+                <p className='fs-5 my-auto'>More recipes by <Link to={`/users/${recipe.createdBy}`}>{recipe.createdBy}</Link></p>)}
+                {user.username !== recipe.createdBy && user.username !== "" && (
+                  <i className={`bi ${likes.includes(recipe._id) ? "bi-heart-fill" : "bi-heart"} fs-2 text-primary`} onClick={handleLike} style={{cursor: "pointer"}} />
+                )}
+              </div>
           </div>
         </div>
       </div>    
@@ -94,7 +129,7 @@ const RecipeId = () => {
         {commentsList.map( (comment, i) => (
           <Comment comment={comment} index={i} key={i} handleDeleteComment={handleDeleteComment}/>
         ))}
-        {!showComment && username && (
+        {!showComment && user.username && (
           <button className='btn btn-primary rounded-circle' onClick={() => setShowComment(true)}><i className="bi bi-plus h2"></i></button>
         )}
         {showComment && (

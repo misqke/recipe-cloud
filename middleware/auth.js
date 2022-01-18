@@ -8,10 +8,10 @@ const authenticateToken = (req, res, next) => {
   }
   jwt.verify(token, `${process.env.JWT_SECRET}`, (error, user) => {
     if (error) {
-      return res.status(403).json(error);
+      console.log("failed authentication", error)
+      return res.status(403).json({error});
     }
     req.user = user;
-    console.log("authentication successfull")
     next();
   })
 }

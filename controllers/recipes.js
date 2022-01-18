@@ -1,22 +1,57 @@
 const Recipe = require('../models/recipe');
+const User = require('../models/user');
 const {cloudinary} = require('../utils/cloudinary');
 
 const getRecipes = async (req, res) => {
   try {
-    const username = req.query.username;
+    const {username} = req.query;
+    const page = Number(req.query.page) || 1;
+    const limit = req.query.limit || 12;
+    const skip = (page -1) * limit;
     let recipes;
+    let totalRecipes;
     if (username) {
       recipes = await Recipe.find({createdBy: username});
+      totalRecipes = recipes.length;
+      recipes = await Recipe.find({createdBy: username}).sort("-updatedAt");
     } else {
       recipes = await Recipe.find();
+      totalRecipes = recipes.length;
+      recipes = await Recipe.find().sort("-updatedAt").skip(skip).limit(limit);
     }
+
     if (!recipes.length) {
       return res.json({msg: "this user does not exist"})
     }
-    res.status(200).json({recipes})
+    const pages = Math.ceil(totalRecipes / limit);
+    res.status(200).json({pages, recipes})
   } catch (error) {
     console.log(error)
   }
+}
+
+const getLikedRecipes = async (req, res) => {
+  try {
+    const {id} = req.query;
+    const recipes = [];
+    const user = await User.findById(id);
+    for (let recipeId of user.liked_recipes) {
+      const recipe = await Recipe.findById(recipeId);
+      if (!recipe) {
+        const index = user.liked_recipes.indexOf(recipeId);
+        const newLikes = [...user.liked_recipes.slice(0, index), ...user.liked_recipes.slice(index+1)];
+        await User.findByIdAndUpdate(id, {liked_recipes: newLikes});
+      } else {
+        recipes.push(recipe);
+      }
+    }
+    res.status(200).json({recipes});
+  } catch (error) {
+    console.log(error);
+  }
+  
+  
+  
 }
 
 const getSingleRecipe = async (req, res) => {
@@ -99,5 +134,6 @@ module.exports = {
   addRecipe,
   updateRecipe,
   getSingleRecipe,
-  deleteRecipe
+  deleteRecipe,
+  getLikedRecipes
 }

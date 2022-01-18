@@ -30,6 +30,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   salt: String,
+  liked_recipes: [mongoose.Types.ObjectId]
 });
 
 // convert password to hashed password at creation
