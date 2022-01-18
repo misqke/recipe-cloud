@@ -21,7 +21,7 @@ app.use(morgan('dev'));
 app.use(express.json({limit: '50mb', extended: true}));    
 app.use(express.urlencoded({limit: '50mb', extended: true}))
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 //cors
 const corsOptions = process.env.NODE_ENV === "development" ? {origin: process.env.CLIENT_URL} : {origin: "https://misqke-recipe-cloud.herokuapp.com"};
