@@ -20,9 +20,9 @@ export const getSingleRecipe = async (id) => {
   }
 }
 
-export const getUserRecipes = async (username) => {
+export const getUserRecipes = async (username, viewer) => {
   try {
-    const response = await axios.get(`https://misqke-recipe-cloud.herokuapp.com/api/recipes/?username=${username}`)
+    const response = await axios.get(`https://misqke-recipe-cloud.herokuapp.com/api/recipes/?username=${username}&viewer=${viewer}`)
     return response.data;
   } catch (error) {
     console.log(error);

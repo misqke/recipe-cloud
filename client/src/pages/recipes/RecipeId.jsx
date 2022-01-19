@@ -77,28 +77,29 @@ const RecipeId = () => {
 
   if (recipe) {
   return (
-    <div className='container py-3'>
+    <div className='container-xl py-3'>
       <h1 className='text-center fs-1 text-primary' style={{fontFamily: "Permanent Marker, cursive"}}>{recipe.name}</h1>
-      <div className="row my-3 justify-content-center justify-content-md-between justify-content-xl-around">
-        <div className="col-10 col-md-4 order-2 order-md-1 my-4 pt-3 my-md-0">
+      <div className="row my-3 py-3 justify-content-center justify-content-md-evenly justify-content-xl-around">
+        <div className="col-10 col-sm-8 col-md-4 order-2 order-md-1 my-4 pt-3 my-md-0">
           <h2 className='text-center font-monospace text-muted'>Ingredients</h2>
           <hr/>
-          <ul style={{listStyleType: "none"}} className='ps-0 ps-sm-4 ps-md-0 ps-lg-5'>
+          <ul style={{listStyleType: "none"}} className='px-1 px-sm-5 px-md-0 px-lg-5'>
             {recipe.ingredients.map( (ingredient,i) => (
-            <li className='my-3 fs-5 d-flex align-items-center' key={i} style={{fontFamily: "'Shadows Into Light', cursive", letterSpacing: "2px"}}>
+            <li className='my-3 fs-4 d-flex align-items-center' key={i} style={{fontFamily: "'Shadows Into Light', cursive", letterSpacing: "2px"}}>
               <div className='bg-primary rounded-circle me-3' style={{height: "10px", width: "10px"}}></div>
               {ingredient.text}{ingredient.amount && ` - ${ingredient.amount}`}
             </li>
               ))}
           </ul>
         </div>
-        <div className="col-md-7 col-xl-6 mt-md-4 order-1 order-md-2">
-          <div className="container-fluid d-flex flex-column justify-content-center px-0 px-md-3">
+        <div className="col-md-7 col-xl-6 mt-md-4 order-1 order-md-2 p-0">
+          <div className="container-fluid d-flex flex-column justify-content-between px-0 px-md-3 h-100 py-md-3">
+            <div className="container-fluid d-flex flex-column align-items-center my-3">
               <img className='img-fluid' style={{border: "10px solid #1266F1",borderRadius: "20px"}} src={recipe.image.url} alt={recipe.name} />
               <div className="container-fluid d-flex justify-content-between px-5 px-md-3 my-2">
                 { user.username === recipe.createdBy ? (
                 <Link to={`/recipes/${recipe._id}/edit`}>
-                  <button className='btn btn-primary mt-3'>Edit Recipe</button>
+                  <button className='btn btn-secondary mt-3'>Edit Recipe</button>
                 </Link>
                 ) : (
                 <p className='fs-5 my-auto'>More recipes by <Link to={`/users/${recipe.createdBy}`}>{recipe.createdBy}</Link></p>)}
@@ -106,6 +107,12 @@ const RecipeId = () => {
                   <i className={`bi ${likes.includes(recipe._id) ? "bi-heart-fill" : "bi-heart"} fs-2 text-primary`} onClick={handleLike} style={{cursor: "pointer"}} />
                 )}
               </div>
+            </div>
+            <div className="col-10 col-sm-8 mx-auto mb-md-5 mb-lg-1">
+              <h2 className="text-center font-monospace text-muted">Total Time</h2>
+              <hr/>
+              <p className='text-center fs-3' style={{fontFamily: "'Shadows Into Light', cursive", letterSpacing: "2px"}}>{recipe.time}</p>
+            </div>
           </div>
         </div>
       </div>    
@@ -115,7 +122,7 @@ const RecipeId = () => {
           <hr/>
           <ul style={{listStyleType: "none"}} className='ps-1'>
             {recipe.directions.map( (direction, i) => (
-            <li className=' fs-5 my-3 px-2 d-flex' key={i} style={{fontFamily: "'Shadows Into Light', cursive", letterSpacing: "2px"}}>
+            <li className=' fs-4 my-3 px-2 d-flex' key={i} style={{fontFamily: "'Shadows Into Light', cursive", letterSpacing: "2px"}}>
               <div className='text-primary p fw-bolder me-3'>{i+1}.</div>
               {direction}
             </li>

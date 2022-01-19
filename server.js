@@ -35,7 +35,7 @@ app.use('/api/user', userRouter);
 
 app.get('/*', async (req, res, next) => {
   res.sendFile(path.join(__dirname, 'client/build/index.html'));
-}); 
+});  
 
 // connect to db and start server
 const port = process.env.PORT || 8000;

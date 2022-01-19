@@ -19,11 +19,11 @@ const UsersRecipeBook = () => {
 
   useEffect(() => {
     async function getRecipes () {
-      const data = await getUserRecipes(creator);
+      const data = await getUserRecipes(creator, user.username);
       setRecipes(data.recipes || false);
     };
     getRecipes();
-  }, [creator])
+  }, [creator, user.username])
 
   useEffect( () => {
     async function getServerLikes (id) {

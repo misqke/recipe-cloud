@@ -46,7 +46,11 @@ const RecipeSchema = new mongoose.Schema({
       type: String,
       required: true
     }
-  }]
+  }],
+  share: {
+    type: Boolean,
+    required: true
+  }
 }, {timestamps: true})
 
 

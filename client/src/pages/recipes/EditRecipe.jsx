@@ -19,11 +19,11 @@ const EditRecipe = () => {
   }, [navigate])
 
   useEffect( () => {
-    async function getServerRecipe () {
+    async function getServerRecipe (id) {
       const data = await getSingleRecipe(id);
       setRecipe(data.recipe || false);
     }
-    getServerRecipe();
+    getServerRecipe(id);
   }, [id])
 
   return (

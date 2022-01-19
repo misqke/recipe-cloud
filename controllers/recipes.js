@@ -4,20 +4,26 @@ const {cloudinary} = require('../utils/cloudinary');
 
 const getRecipes = async (req, res) => {
   try {
-    const {username} = req.query;
+    const {username, viewer} = req.query;
     const page = Number(req.query.page) || 1;
     const limit = req.query.limit || 12;
     const skip = (page -1) * limit;
     let recipes;
     let totalRecipes;
     if (username) {
-      recipes = await Recipe.find({createdBy: username});
-      totalRecipes = recipes.length;
-      recipes = await Recipe.find({createdBy: username}).sort("-updatedAt");
+      if (username === viewer) {
+        recipes = await Recipe.find({createdBy: username});
+        totalRecipes = recipes.length;
+        recipes = await Recipe.find({createdBy: username}).sort("-updatedAt");
+      } else {
+        recipes = await Recipe.find({createdBy: username, share: true});
+        totalRecipes = recipes.length;
+        recipes = await Recipe.find({createdBy: username, share: true}).sort("-updatedAt");
+      }
     } else {
-      recipes = await Recipe.find();
+      recipes = await Recipe.find({share: true});
       totalRecipes = recipes.length;
-      recipes = await Recipe.find().sort("-updatedAt").skip(skip).limit(limit);
+      recipes = await Recipe.find({share: true}).sort("-updatedAt").skip(skip).limit(limit);
     }
 
     if (!recipes.length) {
@@ -66,9 +72,9 @@ const getSingleRecipe = async (req, res) => {
 
 const addRecipe = async (req, res) => {
   try {
-    const {name, time, ingredients, directions, image} = req.body;
+    const {name, time, ingredients, directions, image, share} = req.body;
     const creator = req.user.username;
-    const newRecipe = {name, time, ingredients, directions, image, createdBy: creator};
+    const newRecipe = {name, time, ingredients, directions, image, share, createdBy: creator};
     if (image.url !== "/no-img-icon.png") {
       const uploadResponse = await cloudinary.uploader.upload(image.url, {
         upload_preset: "recipe_uploads"
@@ -88,12 +94,12 @@ const addRecipe = async (req, res) => {
 const updateRecipe = async (req, res) => {
   try {
     const {id} = req.params;
-    const {name, time, ingredients, directions, image} = req.body;
+    const {name, time, ingredients, directions, image, share} = req.body;
     const check = await Recipe.findById(id);
     if (check.createdBy !== req.user.username) {
       return res.status(401).json({msg: "Only the recipe's creator can update it."})
     }
-    const newRecipe = {name, time, ingredients, directions, image};
+    const newRecipe = {name, time, ingredients, directions, image, share};
     if (image.url !== check.image.url && image.url !== "/no-img-icon.png") {
       if (check.image.url !== "/no-img-icon.png") {
         await cloudinary.uploader.destroy(check.image.id, {resource_type: 'image', type: 'upload'},(res, error) => console.log(res, error));

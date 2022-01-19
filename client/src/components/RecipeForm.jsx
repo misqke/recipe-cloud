@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { addRecipe, updateRecipe, deleteRecipe } from '../actions/recipes';
 import { useNavigate } from 'react-router-dom';
 import Ingredient from './Ingredient';
@@ -6,13 +6,13 @@ import Direction from './Direction';
 
 
 const RecipeForm = ({username, recipe, update}) => {
-
+  console.log(recipe)
   const navigate = useNavigate();
 
   // set states
   const [showDelete, setShowDelete] = useState(false);
   const [preview, setPreview] = useState('');
-
+  const [share, setShare] = useState(update ? recipe.share : true);
   const [values, setValues] = useState({
     _id: recipe?._id || null,
     name: recipe?.name || "",
@@ -32,14 +32,13 @@ const RecipeForm = ({username, recipe, update}) => {
 
   // destructure state
   const {name, time, ingredients, directions, image, error, message, loading, showForm, _id,} = values;
-
   // component functions
   const handleSubmit = async (e) => {
     e.preventDefault();
     setValues({...values, loading: true, message: update ? "Updating recipe..." : "Creating recipe...", showForm: false});
     const filteredIngredients = ingredients.filter((ingredient) => ingredient.text.length > 0);
     const filteredDirections = directions.filter((direction) => direction.length > 0)
-    const recipeToSubmit = {name, time, ingredients: filteredIngredients, directions: filteredDirections, image};
+    const recipeToSubmit = {name, time, ingredients: filteredIngredients, directions: filteredDirections, image, share};
     if (update) {recipeToSubmit._id = _id}
     if (preview) {
       recipeToSubmit.image.url = preview;
@@ -71,6 +70,7 @@ const RecipeForm = ({username, recipe, update}) => {
       setValues({...values, error: false, [name]: e.target.value})
     }
   }
+
 
   const handleFileChange = (e) => {
     setValues({...values, error: false, file: null})
@@ -133,6 +133,7 @@ const RecipeForm = ({username, recipe, update}) => {
     }
   }
 
+  
   // recipe form
 
   const showLoading = () => (loading ? <div className='alert alert-info'>{message}</div> : "");
@@ -175,8 +176,11 @@ const RecipeForm = ({username, recipe, update}) => {
               {directions.map( (direction, index) => <Direction key={index} index={index} direction={direction} handleChange={handleDirectionsChange} handleClick={handleDeleteDirection} />)}
             </div>
             <button type='button' className='btn btn-primary' onClick={addDirection}>Add Direction</button>
-    
-            
+            <div className="d-flex gap-3 mt-4 pt-1">
+              <button type="button" className={share ? "btn btn-primary" : "btn btn-secondary"} onClick={ () => setShare(true)}>Public</button>
+              <button type="button" className={!share ? "btn btn-primary" : "btn btn-secondary"} onClick={ () => setShare(false)}>Private</button>
+              <p className='font-monospace my-auto h6'>{share ? "Anyone can view the recipe." : "Recipe only shows in your recipe book."}</p>
+            </div>
           <div className='d-flex justify-content-between'>
             <button type="submit" className="btn btn-primary my-3">{update ? "Update" : "Create"} Recipe</button>
             {update && (
