@@ -8,8 +8,8 @@ const Ingredient = ({index, ingredient, handleClick, handleChange}) => {
       <div className="col-4">
         <input type="text" className="form-control" placeholder="amount" value={ingredient.amount} onChange={handleChange(index,"amount")} />
       </div>
-      <div className="col-1 d-flex justify-content-center align-items-center">
-      <i className="bi-x-square text-secondary  fs-2" onClick={handleClick(index)}></i>
+      <div className="col-1 d-flex mt-2 justify-content-center align-items-center">
+        <i className="bi-x-square text-secondary fs-2" onClick={handleClick(index)}></i>
       </div>
     </div>
   )

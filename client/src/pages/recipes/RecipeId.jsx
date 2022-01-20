@@ -108,7 +108,7 @@ const RecipeId = () => {
                 )}
               </div>
             </div>
-            <div className="col-10 col-sm-8 mx-auto mb-md-5 mb-lg-1">
+            <div className="col-10 col-sm-8 mx-auto mt-3 py-3 mt-md-0 py-md-0 mb-md-5 mb-lg-1">
               <h2 className="text-center font-monospace text-muted">Total Time</h2>
               <hr/>
               <p className='text-center fs-3' style={{fontFamily: "'Shadows Into Light', cursive", letterSpacing: "2px"}}>{recipe.time}</p>

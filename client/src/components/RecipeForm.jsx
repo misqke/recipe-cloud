@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { addRecipe, updateRecipe, deleteRecipe } from '../actions/recipes';
 import { useNavigate } from 'react-router-dom';
 import Ingredient from './Ingredient';
@@ -176,10 +176,14 @@ const RecipeForm = ({username, recipe, update}) => {
               {directions.map( (direction, index) => <Direction key={index} index={index} direction={direction} handleChange={handleDirectionsChange} handleClick={handleDeleteDirection} />)}
             </div>
             <button type='button' className='btn btn-primary' onClick={addDirection}>Add Direction</button>
-            <div className="d-flex gap-3 mt-4 pt-1">
-              <button type="button" className={share ? "btn btn-primary" : "btn btn-secondary"} onClick={ () => setShare(true)}>Public</button>
-              <button type="button" className={!share ? "btn btn-primary" : "btn btn-secondary"} onClick={ () => setShare(false)}>Private</button>
-              <p className='font-monospace my-auto h6'>{share ? "Anyone can view the recipe." : "Recipe only shows in your recipe book."}</p>
+            <div className="d-flex flex-column flex-sm-row gap-3 mt-4 pt-1 align-items-sm-center">
+              <div className='d-flex gap-3'>
+                <button type="button" className={`${share ? "btn btn-primary" : "btn btn-secondary"}`} onClick={ () => setShare(true)}>Public</button>
+                <button type="button" className={!share ? "btn btn-primary" : "btn btn-secondary"} onClick={ () => setShare(false)}>Private</button>
+              </div>
+              <div className="container-fluid">
+                <p className='font-monospace my-auto h6'>{share ? "Anyone can view the recipe." : "Recipe only shows in your recipe book."}</p>
+              </div>
             </div>
           <div className='d-flex justify-content-between'>
             <button type="submit" className="btn btn-primary my-3">{update ? "Update" : "Create"} Recipe</button>
