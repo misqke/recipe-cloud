@@ -75,7 +75,7 @@ const addRecipe = async (req, res) => {
     const {name, time, ingredients, directions, image, share} = req.body;
     const creator = req.user.username;
     const newRecipe = {name, time, ingredients, directions, image, share, createdBy: creator};
-    if (image.url !== "/no-img-icon.png") {
+    if (image.url !== "/food-placeholder.png") {
       const uploadResponse = await cloudinary.uploader.upload(image.url, {
         upload_preset: "recipe_uploads"
       })
@@ -100,8 +100,8 @@ const updateRecipe = async (req, res) => {
       return res.status(401).json({msg: "Only the recipe's creator can update it."})
     }
     const newRecipe = {name, time, ingredients, directions, image, share};
-    if (image.url !== check.image.url && image.url !== "/no-img-icon.png") {
-      if (check.image.url !== "/no-img-icon.png") {
+    if (image.url !== check.image.url && image.url !== "/food-placeholder.png") {
+      if (check.image.url !== "/food-placeholder.png") {
         await cloudinary.uploader.destroy(check.image.id, {resource_type: 'image', type: 'upload'},(res, error) => console.log(res, error));
       }
       const uploadResponse = await cloudinary.uploader.upload(image.url, {
@@ -125,7 +125,7 @@ const deleteRecipe = async (req, res) => {
     if (check.createdBy !== req.user.username) {
       return res.status(401).json({msg: "Only the recipe's creator can delete it."})
     }
-    if (check.image.url !== "/no-img-icon.png") {
+    if (check.image.url !== "/food-placeholder.png") {
       await cloudinary.uploader.destroy(check.image.id, {type: "upload", resource_type: 'image'}, (result, error) => console.log(error, result));
     }
     await Recipe.findByIdAndDelete(id);

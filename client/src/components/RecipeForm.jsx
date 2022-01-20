@@ -20,7 +20,7 @@ const RecipeForm = ({username, recipe, update}) => {
     ingredients: recipe?.ingredients || [{text:"", amount: ""}],
     directions: recipe?.directions || [""],
     image: {
-      url: recipe?.image?.url || "/no-img-icon.png",
+      url: recipe?.image?.url || "/food-placeholder.png",
       id: recipe?.image?.id || ""
     },
     file: null,
