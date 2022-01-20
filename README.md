@@ -4,7 +4,7 @@ An online recipe book with dash of social media. Store and share your recipes, w
 
 View live site [here](https://misqke-recipe-cloud.herokuapp.com).
 
-<a href="https://www.flaticon.com/free-icons/restaurant" title="restaurant icons">Restaurant icons created by Freepik - Flaticon</a>
+Default image icon by [Daniel Rodriguez](https://www.iconfinder.com/DanielRT97).
 
 ---
 
