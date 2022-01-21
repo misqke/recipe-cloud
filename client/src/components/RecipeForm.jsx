@@ -133,6 +133,25 @@ const RecipeForm = ({username, recipe, update}) => {
     }
   }
 
+  const handleMoveDirection = (moveUp, i) => {
+    return () => {
+      const newDirections = [...directions];
+      const direction = newDirections.splice(i, 1);
+      if (moveUp) {
+        if (i !== 0) {
+          newDirections.splice(i-1, 0, direction);
+          setValues({...values, directions: newDirections});
+        }
+      } else {
+        if (i < directions.length) {
+          newDirections.splice(i+1, 0, direction);
+          setValues({...values, directions: newDirections});
+        }
+      }
+      
+    }
+  }
+
   
   // recipe form
 
@@ -141,7 +160,7 @@ const RecipeForm = ({username, recipe, update}) => {
 
   const RecipeForm = () => {
     return (
-      <div className='container-fluid position-relative d-flex flex-column justify-content-center'>
+      <div className='container-fluid position-relative d-flex flex-column justify-content-center px-0'>
           <form onSubmit={handleSubmit} className="row g-3 mb-5" method='post' encType="multipart/form-data">
 
             <div className="col-md-12">
@@ -173,7 +192,7 @@ const RecipeForm = ({username, recipe, update}) => {
     
             <div className="container">
               <label className='form-label font-monospace'>Directions</label>
-              {directions.map( (direction, index) => <Direction key={index} index={index} direction={direction} handleChange={handleDirectionsChange} handleClick={handleDeleteDirection} />)}
+              {directions.map( (direction, index) => <Direction key={index} index={index} direction={direction} handleChange={handleDirectionsChange} handleClick={handleDeleteDirection} handleMove={handleMoveDirection} />)}
             </div>
             <button type='button' className='btn btn-primary' onClick={addDirection}>Add Direction</button>
             <div className="d-flex flex-column flex-sm-row gap-3 mt-4 pt-1 align-items-sm-center">

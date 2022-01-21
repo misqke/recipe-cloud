@@ -29,7 +29,7 @@ const EditRecipe = () => {
   return (
     <div className="container">
       <div className="row justify-content-center">
-      <h2 className='text-center mb-5 text-primary' style={{fontFamily: "Permanent Marker, cursive"}}>EDIT RECIPE</h2>
+      <h2 className='text-center mb-3 text-primary' style={{fontFamily: "Permanent Marker, cursive"}}>EDIT RECIPE</h2>
         <div className="col-11 col-md-9">
           {recipe && <RecipeForm recipe={recipe} username={username} update={true} />}
         </div>

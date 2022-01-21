@@ -18,7 +18,7 @@ const AddRecipe = () => {
   return (
     <div className="container">
       <div className="row justify-content-center">
-      <h2 className='text-center my-3 text-primary' style={{fontFamily: "Permanent Marker, cursive"}}>CREATE RECIPE</h2>
+      <h2 className='text-center mb-3 text-primary' style={{fontFamily: "Permanent Marker, cursive"}}>CREATE RECIPE</h2>
         <div className="col-11 col-md-9">
           <RecipeForm username={username} />
         </div>
