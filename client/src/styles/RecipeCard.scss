@@ -1,12 +1,13 @@
+.outerContainer {
+  width: 100%;
+}
 .cardContainer {
   display: flex;
   width: 100%;
-  padding-top: 8rem;
+  padding-top: 9rem;
   background-size: cover;
   flex-direction: column;
   justify-content: space-between;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
   background-position: center;
   background-color: #eee;
   box-shadow: 3px 4px 6px 0 #1266f1cf;
@@ -15,12 +16,8 @@
 .body {
   width: 100%;
   padding: 1rem;
+  padding-bottom: 8px;
   background: linear-gradient(180deg, #0000, #0006 15%, #000);
-}
-
-.btnContainer {
-  display: flex;
-  justify-content: space-between;
 }
 
 .author {
@@ -28,25 +25,18 @@
   align-self: flex-end;
 }
 
-@media screen and (min-width: 576px) {
-  .cardContainer {
+@media screen and (min-width: 400px) {
+  .outerContainer {
     width: 45%;
   }
 }
 @media screen and (min-width: 768px) {
-  .cardContainer {
+  .outerContainer {
     width: 30%;
   }
 }
-
-@media screen and (min-width: 992px) {
-  .cardContainer {
-    width: 25%;
-  }
-}
-
 @media screen and (min-width: 1200px) {
-  .cardContainer {
-    width: 20%;
+  .outerContainer {
+    width: 22%;
   }
 }

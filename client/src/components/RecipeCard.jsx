@@ -1,29 +1,44 @@
+import { Link } from "react-router-dom";
+import "../styles/RecipeCard.scss";
+import { useNavigate } from "react-router-dom";
 
-import {Link} from 'react-router-dom'
-import '../styles/RecipeCard.scss';
+const RecipeCard = ({ recipe, username }) => {
+  const navigate = useNavigate();
 
-
-const RecipeCard = ({recipe, username}) => {
+  const handleClick = () => {
+    navigate(`/recipes/${recipe._id}`);
+  };
 
   return (
-    <div className='cardContainer' style={{backgroundImage: `url(${recipe.image.url})`}}>
-      <div className='body'>
-        <h4 className='text-truncate text-white fst-italic'>{recipe.name}</h4>
-        <div className='btnContainer'>
-          <Link to={`/recipes/${recipe._id}`}>
-            <button className='btn btn-sm btn-primary text-truncate'>View Recipe</button>
-          </Link>
+    <div className="outerContainer">
+      <div
+        onClick={handleClick}
+        className="cardContainer"
+        style={{
+          backgroundImage: `url(${recipe.image.url})`,
+          cursor: "pointer",
+        }}
+      >
+        <div className="body">
+          <h5
+            className="text-white text-truncate"
+            style={{ fontFamily: "Permanent Marker, cursive" }}
+          >
+            {recipe.name}
+          </h5>
           {username === recipe.createdBy ? (
-          <Link to={`/recipes/${recipe._id}/edit`}>
-            <button className='btn btn-sm btn-secondary'>Edit</button>
-          </Link>
+            <Link to={`/recipes/${recipe._id}/edit`}>
+              <button className="btn btn-sm btn-secondary py-0 px-3">
+                Edit
+              </button>
+            </Link>
           ) : (
-          <h6 className='author'>{recipe.createdBy}</h6>
+            <h6 className="author">{recipe.createdBy}</h6>
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RecipeCard
+export default RecipeCard;
