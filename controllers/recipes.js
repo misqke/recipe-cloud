@@ -24,9 +24,10 @@ const getRecipes = async (req, res) => {
       }
     } else {
       if (search) {
-        recipes = await Recipe.find({ share: true });
+        console.log(search);
+        recipes = await Recipe.findBySearch(search);
         totalRecipes = recipes.length;
-        recipes = await Recipe.find({ share: true }).skip(skip).limit(limit);
+        recipes = await Recipe.findBySearch(search).skip(skip).limit(limit);
       } else {
         recipes = await Recipe.find({ share: true });
         totalRecipes = recipes.length;
@@ -36,7 +37,6 @@ const getRecipes = async (req, res) => {
           .limit(limit);
       }
     }
-
     if (!recipes.length) {
       if (search) {
         return res.json({ msg: "no search results" });

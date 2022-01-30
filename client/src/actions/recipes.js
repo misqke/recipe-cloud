@@ -1,22 +1,10 @@
 import axios from "axios";
 import { getCookie } from "./auth";
 
-export const getRecipes = async (page) => {
+export const getRecipes = async (page, search) => {
   try {
     const response = await axios.get(
-      `https://misqke-recipe-cloud.herokuapp.com/api/recipes/?page=${page}`
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return error.response.data;
-  }
-};
-
-export const searchRecipes = async (search) => {
-  try {
-    const response = await axios.get(
-      `https://misqke-recipe-cloud.herokuapp.com/api/recipes/?search=${search}`
+      `https://misqke-recipe-cloud.herokuapp.com/api/recipes/?page=${page}&search=${search}`
     );
     return response.data;
   } catch (error) {
