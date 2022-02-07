@@ -26,17 +26,8 @@ const RecipeCard = ({ recipe, username }) => {
           >
             {recipe.name}
           </h5>
-          <div>
-            {username === recipe.createdBy ? (
-              <Link to={`/recipes/${recipe._id}/edit`}>
-                <button className="btn btn-sm btn-secondary py-0 px-3">
-                  Edit
-                </button>
-              </Link>
-            ) : (
-              <h6 className="author">{recipe.createdBy}</h6>
-            )}
-          </div>
+
+          <h6 className="author">{recipe.createdBy}</h6>
         </div>
       </div>
     </div>
