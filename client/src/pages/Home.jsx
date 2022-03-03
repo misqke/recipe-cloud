@@ -26,7 +26,6 @@ const Home = () => {
 
   useEffect(() => {
     async function getServerRecipes() {
-      console.log("use effect search");
       const data = await getRecipes(page, search);
       if (data.recipes) {
         setRecipes(data.recipes);
