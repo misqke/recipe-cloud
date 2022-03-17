@@ -15,7 +15,7 @@ const RecipeId = () => {
   const [recipe, setRecipe] = useState(false);
   const [comment, setComment] = useState("");
   const [showComment, setShowComment] = useState(false);
-  const [commentsList, setCommentsList] = useState(recipe.comments || []);
+  const [commentsList, setCommentsList] = useState([]);
   const [likes, setLikes] = useState([]);
 
   const user = useSelector((state) => state.user);
@@ -44,6 +44,7 @@ const RecipeId = () => {
       if (id !== undefined) {
         const data = await getSingleRecipe(id);
         setRecipe(data.recipe || "none");
+        setCommentsList(data.recipe.comments || []);
       }
     }
     getServerRecipe(id);
