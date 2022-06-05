@@ -22,10 +22,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "client/build")));
 
 //cors
-const corsOptions =
-  process.env.NODE_ENV === "development"
-    ? { origin: "*" }
-    : { origin: "https://misqke-recipe-cloud.herokuapp.com" };
+const corsOptions = { origin: "*" };
+// process.env.NODE_ENV === "development"
+//   ? { origin: "*" }
+//   : { origin: "https://misqke-recipe-cloud.herokuapp.com" };
 app.use(cors(corsOptions));
 
 // routes
