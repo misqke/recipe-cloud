@@ -13,12 +13,10 @@ const signUp = async (req, res) => {
       return res.status(400).json({ error: "That username is taken." });
     }
     let newUser = await User.create({ username, name, email, password });
-    res
-      .status(201)
-      .json({
-        message: `Sign up was successful, please log in to continue`,
-        newUser,
-      });
+    res.status(201).json({
+      message: `Sign up was successful, please log in to continue`,
+      newUser,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -39,8 +37,10 @@ const logIn = async (req, res) => {
       { expiresIn: "1d" }
     );
     res.cookie("token", token, { expiresIn: "1d" });
-    const { _id, username } = user;
-    res.status(201).json({ token, user: { _id, username } });
+    const { _id, username, liked_recipes } = user;
+    res
+      .status(201)
+      .json({ token, user: { _id, username, likes: liked_recipes } });
   } catch (error) {
     console.log(error);
     res.json({ error });
